@@ -47,7 +47,8 @@ printf '\nAPI keys are not installed by this script. Set them in your shell, for
 printf '  export OPENROUTER_API_KEY="sk-or-v1-..."\n'
 printf '  export ZENMUX_API_KEY="sk-ss-v1-..."   # subscription, or sk-ai-v1-... for PAYG\n'
 printf 'Then restart the shell (or source your shell config).\n\n'
-printf 'Official:   codex            # uses ChatGPT login/API key and the official default model\n'
+printf 'Default:    codex            # uses the built-in OpenAI provider\n'
+printf 'Official:   codex -p official   # requires ChatGPT login\n'
 printf 'OpenRouter: codex -p openrouter\n'
 printf 'ZenMux:     codex -p zenmux\n'
 printf 'ZenMux model catalog: %s/zenmux-models.json\n' "$codex_home"

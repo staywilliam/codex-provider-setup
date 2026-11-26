@@ -6,7 +6,7 @@ ZenMux，不需要反复改写 `config.toml`。
 | 命令 | 供应商 | 模型 |
 | --- | --- | --- |
 | `codex` | OpenAI（默认） | Codex 官方默认模型 |
-| `codex -p official` | OpenAI（官方 profile） | 同上，`model_reasoning_effort = "xhigh"` |
+| `codex -p official` | OpenAI（仅 ChatGPT 登录） | 同上，`model_reasoning_effort = "xhigh"` |
 | `codex -p openrouter` | OpenRouter | `deepseek/deepseek-v4.1-flash-1017` |
 | `codex -p zenmux` | ZenMux | `deepseek/deepseek-v4.1-flash` |
 
@@ -84,14 +84,21 @@ codex login
 普通 `codex` 会使用官方供应商。`codex login status` 显示 `Not logged in` 只
 表示本机尚未登录，不代表订阅失效。
 
-默认供应商由基础 `config.toml` 的 `model_provider` 决定；未设置时默认是
-`openai`。推荐保持现在的设计：
+默认供应商由基础 `config.toml` 的 `model_provider` 决定。未设置时默认是
+`openai`。`codex -p official` 显式选择 `openai`，并通过
+`forced_login_method = "chatgpt"` 要求使用 ChatGPT 登录。官方请求失败时，
+Codex 不会自动切换到 OpenRouter 或 ZenMux。
 
 ```text
 codex                -> 官方 openai
+codex -p official    -> 官方 openai，仅 ChatGPT 登录
 codex -p openrouter  -> OpenRouter
 codex -p zenmux      -> ZenMux
 ```
+
+已保存的会话保留原供应商。用 `codex resume -p openrouter <会话 ID>` 可继续
+OpenRouter 会话。用 `codex fork -p official <会话 ID>` 可将其历史带到一条新的
+官方会话。
 
 如果确实想把 OpenRouter 设为普通 `codex` 的默认值，在基础 `config.toml`
 顶部加入：
@@ -101,11 +108,12 @@ model_provider = "openrouter"
 model = "deepseek/deepseek-v4.1-flash-1017"
 ```
 
-这会让官方 profile 也继承 OpenRouter 的模型，因此必须同时让
-`official.config.toml` 显式切回官方供应商，并填入你账号可用的官方模型 ID：
+这会让官方 profile 也继承 OpenRouter 的模型。此时在
+`official.config.toml` 中加入你账号可用的官方模型 ID：
 
 ```toml
 model_provider = "openai"
+forced_login_method = "chatgpt"
 model = "<你的官方模型 ID>"
 model_reasoning_effort = "xhigh"
 ```

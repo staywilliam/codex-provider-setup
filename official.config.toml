@@ -1,1 +1,3 @@
+model_provider = "openai"
+forced_login_method = "chatgpt"
 model_reasoning_effort = "xhigh"

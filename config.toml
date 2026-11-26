@@ -1,0 +1,17 @@
+[model_providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+wire_api = "responses"
+
+[model_providers.openrouter.auth]
+command = "sh"
+args = ["-c", "echo $OPENROUTER_API_KEY"]
+
+[model_providers.zenmux]
+name = "ZenMux"
+base_url = "https://zenmux.ai/api/v1"
+env_key = "ZENMUX_API_KEY"
+wire_api = "responses"
+
+[tui]
+screen_reader_detection_done = true

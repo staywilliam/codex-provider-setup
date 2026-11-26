@@ -1,0 +1,4 @@
+model_provider = "zenmux"
+model = "deepseek/deepseek-v4.1-flash:deepseek"
+model_catalog_json = "__CODEX_HOME__/zenmux-models.json"
+web_search = "disabled"

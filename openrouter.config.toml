@@ -1,0 +1,3 @@
+model_provider = "openrouter"
+model = "deepseek/deepseek-v4.1-flash-1017"
+model_reasoning_effort = "max"
